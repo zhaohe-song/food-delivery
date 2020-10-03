@@ -4,4 +4,4 @@ build
 *.log
 
 server/node_modules
-config.env
+.env
