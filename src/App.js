@@ -1,25 +1,49 @@
-import React from 'react'
-import { Provider } from 'react-redux'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import store from './store'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { authUser } from './actions/user'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Header from './components/Header'
 import Register from './components/Register'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import Menu from './components/Menu'
+import Footer from './components/Footer'
+import Container from '@material-ui/core/Container'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { getRestaurants, getCustomerOrders } from './actions/customer'
 
-const App = () => {
+const App = ({ user, getRestaurants, getCustomerOrders }) => {
+  useEffect(() => {
+    store.dispatch(authUser())
+  }, [])
+
+  useEffect(() => {
+    getRestaurants()
+    getCustomerOrders()
+  }, [user])
+
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Header />
+    <BrowserRouter>
+      <Header />
+      <Container>
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Dashboard} />
+          <Route exact path="/:id/menu" component={Menu} />
+          <Redirect to="/" />
         </Switch>
-      </BrowserRouter>
-    </Provider>
+      </Container>
+      <Footer />
+      <ToastContainer autoClose={2000} position="top-center" />
+    </BrowserRouter>
   )
 }
 
-export default App
+const mapStateToProps = state => ({
+  user: state.user.token
+})
+
+export default connect(mapStateToProps, { getRestaurants, getCustomerOrders })(App)

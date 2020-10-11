@@ -9,17 +9,34 @@ const path = require('path')
 const chalk = require('chalk')
 
 const app = express()
+const http = require('http')
+const server = http.createServer(app)
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({ server })
+
+app.use((req, res, next) => {
+  res.wss = wss
+  next()
+})
+
+wss.on('connection', (ws, req) => {
+  ws.req = req
+  ws.on('message', message => {
+    const data = JSON.parse(message)
+    if (data.type === 'socketID') {
+      ws.socketID = data.socketID
+      ws.usertype = data.usertype
+    }
+  })
+})
 
 if (process.env.NODE_ENV === 'development') {
   const morgan = require('morgan')
   app.use(morgan('dev'))
-}
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.resolve(__dirname, '..', 'build')))
-  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html')))
 }
 
 // user account API
@@ -29,6 +46,8 @@ app.use('/restaurant', require('./routes/restaurant'))
 
 // business logic API
 const auth = require('./middleware/auth')
+app.use('/auth', auth, require('./routes/auth'))
+
 const authRestaurant = require('./middleware/authRestaurant')
 const authCustomer = require('./middleware/authCustomer')
 const authDriver = require('./middleware/authDriver')
@@ -38,7 +57,10 @@ app.use('/order', auth, authCustomer, require('./routes/order'))
 app.use('/restaurantorder', auth, authRestaurant, require('./routes/restaurantOrder'))
 app.use('/driverorder', auth, authDriver, require('./routes/driverOrder'))
 
-const http = require('http')
-const server = http.createServer(app)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, '..', 'build')))
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html')))
+}
+
 const PORT = process.env.PORT
 server.listen(PORT, () => console.log(chalk.green((`server running in ${process.env.NODE_ENV} mode on port ${PORT}...`))))

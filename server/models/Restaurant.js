@@ -15,6 +15,9 @@ const RestaurantSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String
+  },
   register_at: {
     type: Date,
     default: Date.now

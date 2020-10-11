@@ -34,7 +34,6 @@ router.put('/:id', async (req, res) => {
   try {
     const item = await Item.findById(req.params.id)
     item.name = req.body.name
-    item.category = req.body.category
     item.price = req.body.price
     item.image = req.body.image
     await item.save()

@@ -20,10 +20,24 @@ const OrderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Driver'
   },
-  orderDetail: {
-    type: Array,
-    default: []
-  },
+  orderDetail: [{
+    item: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item'
+    },
+    size: {
+      type: String,
+      default: 'normal',
+      enum: ['small', 'normal', 'large']
+    },
+    amount: {
+      type: Number,
+      default: 1
+    },
+    notes: {
+      type: String
+    }
+  }],
   create_at: {
     type: Date,
     default: Date.now
