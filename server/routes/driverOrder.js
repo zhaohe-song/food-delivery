@@ -40,6 +40,9 @@ router.put('/:id', async (req, res) => {
       .populate('customer', 'username')
       .populate('restaurant', 'username')
       .populate('orderDetail.item', 'name price')
+    if (order.driver) {
+      return res.status(422).json({ message: 'This order has been taken by the other driver'})
+    }
     order.driver = req.user.id
     await order.save()
     res.json(order)

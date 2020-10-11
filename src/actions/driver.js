@@ -46,6 +46,6 @@ export const addDriverOrder = id => async (dispatch, getState) => {
       payload: res.data
     })
   } catch (err) {
-    toast.error(`Error ${err.response.status}: ${err.response.data.message}`)
+    toast.error(`😥 ${err.response.data.message}`)
   }
 }
