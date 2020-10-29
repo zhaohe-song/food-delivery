@@ -32,7 +32,7 @@ const Dashboard = ({ isAuthenticated, usertype, user, addDriverOrder, addRestaur
   }, [newOrder])
 
   if (isAuthenticated) {
-    const ws = new WebSocket(`ws://${window.location.hostname}:8000`)
+    const ws = new WebSocket(`ws://${window.location.host}`)
     ws.onopen = () => {
       ws.send(JSON.stringify({
         type: "socketID",

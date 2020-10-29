@@ -183,17 +183,17 @@ const Menu = ({ match, isAuthenticated, restaurants, items, orders, cart, getRes
         <Divider />
         <Typography style={{ margin: 5 }}>Your Order</Typography>
         <Typography style={{ margin: 5 }} color="secondary">{restaurant && restaurant.username}</Typography>
-        <Button variant="contained" color="primary" onClick={() => setType(prev => prev === 'delivery' ? 'carryout' : 'delivery')} style={{ margin: 5 }}>
+        <Button variant="contained" color="primary" onClick={() => setType(prev => prev === 'delivery' ? 'carryout' : 'delivery')} style={{ margin: 5, minHeight: 30 }}>
           {type}
         </Button>
-        <Button variant="contained" color="primary" onClick={handleAddCustomerOrder} style={{ margin: 5 }}>
+        <Button variant="contained" color="primary" onClick={handleAddCustomerOrder} style={{ margin: 5, minHeight: 30 }}>
           <div>Checkout</div>
           <div style={{ marginLeft: 'auto' }}>
             {thisCart.length === 0 ? '' :
               (thisCart.length === 1 ? ('$' + thisCart[0].price) : ('$' + thisCart.reduce((prev, next) => prev + parseFloat(next.price), 0).toFixed(2)))}
           </div>
         </Button>
-        <Button variant="contained" color="secondary" onClick={() => { emptyCart(); setIsDrawerOpen(false) }} style={{ margin: 5 }}>
+        <Button variant="contained" color="secondary" onClick={() => { emptyCart(); setIsDrawerOpen(false) }} style={{ margin: 5, minHeight: 30 }}>
           Empty Cart
         </Button>
         <Divider />
