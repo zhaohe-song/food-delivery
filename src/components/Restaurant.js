@@ -200,7 +200,7 @@ const Restaurant = ({ items, orders, getItems, addItem, getRestaurantOrders }) =
           <AccordionDetails style={{ display: 'flex', flexDirection: 'column' }}>
             {order.orderDetail.map(detail => (
               <Typography key={detail._id} variant="body2" color="textSecondary">
-                {detail.amount} {detail.size} {detail.item.name} {detail.notes}
+                {detail.amount} {detail.size} {detail.item.name} {detail.notes} {' '}
                 ${detail.size === 'normal' ? detail.item.price * detail.amount :
                   (detail.size === 'small' ? (detail.item.price * 0.75 * detail.amount).toFixed(2) : (detail.item.price * 1.25 * detail.amount).toFixed(2))
                 }

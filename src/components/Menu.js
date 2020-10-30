@@ -27,7 +27,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
-import MenuIcon from '@material-ui/icons/Menu'
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined'
 import Drawer from '@material-ui/core/Drawer'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import Divider from '@material-ui/core/Divider'
@@ -161,7 +161,7 @@ const Menu = ({ match, isAuthenticated, restaurants, items, orders, cart, getRes
             {categories.map(category => <Tab key={category} label={category} />)}
           </Tabs>
           <IconButton onClick={() => setIsDrawerOpen(true)} style={{ marginLeft: 'auto' }}>
-            <MenuIcon />
+            <ShoppingCartOutlinedIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -285,7 +285,7 @@ const Menu = ({ match, isAuthenticated, restaurants, items, orders, cart, getRes
           <AccordionDetails style={{ display: 'flex', flexDirection: 'column' }}>
             {order.orderDetail.map(detail => (
               <Typography key={detail._id} variant="body2" color="textSecondary">
-                {detail.amount} {detail.size} {detail.item.name} {detail.notes}
+                {detail.amount} {detail.size} {detail.item.name} {detail.notes} {' '}
                 ${detail.size === 'normal' ? detail.item.price * detail.amount :
                   (detail.size === 'small' ? (detail.item.price * 0.75 * detail.amount).toFixed(2) : (detail.item.price * 1.25 * detail.amount).toFixed(2))
                 }
