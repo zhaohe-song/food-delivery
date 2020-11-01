@@ -29,10 +29,10 @@ const App = ({ user, getRestaurants, getCustomerOrders }) => {
       <Header />
       <Container>
         <Switch>
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/:id/menu" component={Menu} />
+          <Route exact path="/register" children={<Register />} />
+          <Route exact path="/login" children={<Login />} />
+          <Route exact path="/" children={<Dashboard />} />
+          <Route exact path="/:id/menu" children={<Menu />} />
           <Redirect to="/" />
         </Switch>
       </Container>

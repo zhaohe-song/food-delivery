@@ -37,7 +37,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone'
 import { toast } from 'react-toastify'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useParams } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 
 const Item = ({ item, setIsDialogOpen, setCurrentItem }) => {
@@ -84,8 +84,9 @@ const TabPanel = ({ value, index, items, setIsDialogOpen, setCurrentItem }) => {
   )
 }
 
-const Menu = ({ match, isAuthenticated, restaurants, items, orders, cart, getRestaurantItems, addCustomerOrder, addItemToCart, deleteItemFromCart, emptyCart }) => {
-  const restaurantID = match.params.id
+const Menu = ({ isAuthenticated, restaurants, items, orders, cart, getRestaurantItems, addCustomerOrder, addItemToCart, deleteItemFromCart, emptyCart }) => {
+  const { id } = useParams()
+  const restaurantID = id
   const restaurant = restaurants.filter(restaurant => restaurant._id === restaurantID)[0]
   const thisCart = cart.filter(item => item.restaurantID === restaurantID)
 

@@ -19,6 +19,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 
 const Dashboard = ({ isAuthenticated, usertype, user, addDriverOrder, addRestaurantOrder }) => {
+  console.log('jiji')
   const [newOrder, setNewOrder] = useState(null)
   const [open, setOpen] = useState(false)
 
